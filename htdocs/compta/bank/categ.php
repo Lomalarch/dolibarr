@@ -79,7 +79,10 @@ if ($categid) {
  * View
  */
 
-llxHeader();
+$title = $langs->trans('RubriquesTransactions');
+$help_url = 'EN:Module_Banks_and_Cash|FR:Module_Banques_et_Caisses|ES:M&oacute;dulo_Bancos_y_Cajas';
+
+llxHeader('', $title, $help_url);
 
 
 print load_fiche_titre($langs->trans("RubriquesTransactions"), '', 'object_category');
@@ -123,7 +126,8 @@ $sql .= " ORDER BY rowid";
 $result = $db->query($sql);
 if ($result) {
 	$num = $db->num_rows($result);
-	$i = 0; $total = 0;
+	$i = 0;
+	$total = 0;
 
 	while ($i < $num) {
 		$objp = $db->fetch_object($result);

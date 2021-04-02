@@ -99,7 +99,7 @@ if (empty($reshook)) {
 
 	if ($action == 'setsupplieraccountancycode') {
 		$result = $object->fetch($id);
-		$object->code_compta_fournisseur = $_POST["supplieraccountancycode"];
+		$object->code_compta_fournisseur = GETPOST("supplieraccountancycode");
 		$result = $object->update($object->id, $user, 1, 0, 1);
 		if ($result < 0) {
 			setEventMessages($object->error, $object->errors, 'errors');
@@ -195,7 +195,7 @@ if ($object->id > 0) {
 	print '<div class="fichecenter"><div class="fichehalfleft">';
 
 	print '<div class="underbanner clearboth"></div>';
-	print '<table width="100%" class="border">';
+	print '<table class="border centpercent tableforfield">';
 
 	// Type Prospect/Customer/Supplier
 	print '<tr><td class="titlefield">'.$langs->trans('NatureOfThirdParty').'</td><td>';
@@ -209,7 +209,7 @@ if ($object->id > 0) {
 	if ($object->fournisseur) {
 		print '<tr>';
 		print '<td class="titlefield">'.$langs->trans("SupplierCode").'</td><td>';
-		print $object->code_fournisseur;
+		print showValueWithClipboardCPButton(dol_escape_htmltag($object->code_fournisseur));
 		$tmpcheck = $object->check_codefournisseur();
 		if ($tmpcheck != 0 && $tmpcheck != -5) {
 			print ' <font class="error">('.$langs->trans("WrongSupplierCode").')</font>';
@@ -250,7 +250,7 @@ if ($object->id > 0) {
 
 	// TVA Intra
 	print '<tr><td class="nowrap">'.$langs->trans('VATIntra').'</td><td>';
-	print $object->tva_intra;
+	print showValueWithClipboardCPButton(dol_escape_htmltag($object->tva_intra));
 	print '</td></tr>';
 
 	// Default terms of the settlement
@@ -654,7 +654,7 @@ if ($object->id > 0) {
 			$sql2 .= " AND c.fk_statut IN (".$db->sanitize(CommandeFournisseur::STATUS_RECEIVED_COMPLETELY).")"; //  Must match filter in htdocs/fourn/commande/list.php
 		} else {
 			// CommandeFournisseur::STATUS_ORDERSENT.", ".CommandeFournisseur::STATUS_RECEIVED_PARTIALLY.", ".CommandeFournisseur::STATUS_RECEIVED_COMPLETELY
-			$sql2 .= " AND c.fk_statut IN (".$db->sanitize($db->escape($conf->global->SUPPLIER_ORDER_TO_INVOICE_STATUS)).")";
+			$sql2 .= " AND c.fk_statut IN (".$db->sanitize($conf->global->SUPPLIER_ORDER_TO_INVOICE_STATUS).")";
 		}
 		$sql2 .= " AND c.billed = 0";
 		// Find order that are not already invoiced
@@ -808,7 +808,7 @@ if ($object->id > 0) {
 
 
 	/*
-	 * Barre d'actions
+	 * Action bar
 	 */
 	print '<div class="tabsAction">';
 
